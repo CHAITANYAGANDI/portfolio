@@ -53,22 +53,94 @@ function BrandMark() {
   );
 }
 
-function Header({ active }: { active: string }) {
+const IconSun = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2" />
+    <path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7" />
+  </svg>
+);
+
+const IconMoon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5z" />
+  </svg>
+);
+
+const IconMenu = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M4 7h16M4 12h16M4 17h16" />
+  </svg>
+);
+
+const IconClose = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M6 6l12 12M18 6 6 18" />
+  </svg>
+);
+
+function ThemeToggle({ theme, onToggle }: { theme: "light" | "dark"; onToggle: () => void }) {
+  const nextLabel = theme === "dark" ? "light" : "dark";
+  return (
+    <button
+      type="button"
+      className="theme-toggle"
+      onClick={onToggle}
+      aria-label={`Switch to ${nextLabel} mode`}
+      title={`Switch to ${nextLabel} mode`}
+    >
+      {theme === "dark" ? <IconSun /> : <IconMoon />}
+    </button>
+  );
+}
+
+function Header({
+  active,
+  theme,
+  onToggleTheme,
+  menuOpen,
+  onToggleMenu,
+  onCloseMenu,
+}: {
+  active: string;
+  theme: "light" | "dark";
+  onToggleTheme: () => void;
+  menuOpen: boolean;
+  onToggleMenu: () => void;
+  onCloseMenu: () => void;
+}) {
   return (
     <motion.header
-      className="site-header"
+      className={menuOpen ? "site-header menu-open" : "site-header"}
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.15 }}
     >
       <BrandMark />
-      <nav aria-label="Portfolio sections">
-        {navItems.map((item) => (
-          <a className={active === item.id ? "active" : ""} href={`#${item.id}`} key={item.id}>
-            {item.label}
-          </a>
-        ))}
-      </nav>
+      <div className="header-end">
+        <nav id="primary-nav" aria-label="Portfolio sections">
+          {navItems.map((item) => (
+            <a
+              className={active === item.id ? "active" : ""}
+              href={`#${item.id}`}
+              key={item.id}
+              onClick={onCloseMenu}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+        <button
+          type="button"
+          className="menu-toggle"
+          onClick={onToggleMenu}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="primary-nav"
+        >
+          {menuOpen ? <IconClose /> : <IconMenu />}
+        </button>
+      </div>
     </motion.header>
   );
 }
@@ -631,6 +703,26 @@ function SiteFooter() {
 export default function PortfolioExperience() {
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState("experience");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const current = document.documentElement.getAttribute("data-theme");
+    if (current === "light" || current === "dark") setTheme(current);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try {
+        localStorage.setItem("theme", next);
+      } catch {
+        /* ignore storage errors (private mode, etc.) */
+      }
+      return next;
+    });
+  };
 
   useEffect(() => {
     const sections = navItems
@@ -653,7 +745,14 @@ export default function PortfolioExperience() {
     <div className={reduceMotion ? "portfolio-root reduce-motion" : "portfolio-root"}>
       <div className="noise" aria-hidden="true" />
       <div className="scan-line" aria-hidden="true" />
-      <Header active={active} />
+      <Header
+        active={active}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+        menuOpen={menuOpen}
+        onToggleMenu={() => setMenuOpen((v) => !v)}
+        onCloseMenu={() => setMenuOpen(false)}
+      />
       <main>
         <HeroSection />
         <AboutSection />

@@ -89,7 +89,7 @@ function IconCart() {
 
 function TechTag({ label }: { label: string }) {
   return (
-    <li className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[0.72rem] leading-none text-white/70">
+    <li className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1.5 text-[0.72rem] leading-none text-[var(--fg-70)]">
       {label}
     </li>
   );
@@ -101,7 +101,7 @@ function LinkPill({ href, label, icon }: { href: string; label: string; icon: Re
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[0.74rem] text-white/75 transition duration-200 hover:-translate-y-0.5 hover:border-[#6da0ff]/45 hover:bg-[#6da0ff]/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6da0ff]"
+      className="inline-flex items-center gap-1.5 rounded-md border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1.5 text-[0.74rem] text-[var(--fg-75)] transition duration-200 hover:-translate-y-0.5 hover:border-[var(--blue)] hover:bg-[var(--blue)]/10 hover:text-[var(--fg-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue)]"
     >
       {icon}
       <span>{label}</span>
@@ -116,7 +116,7 @@ function ArrowButton({ href, label }: { href: string; label: string }) {
       aria-label={label}
       target="_blank"
       rel="noreferrer"
-      className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-white/12 bg-white/[0.02] text-white/70 transition duration-200 hover:-translate-y-0.5 hover:border-[#6da0ff]/50 hover:bg-[#6da0ff]/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6da0ff]"
+      className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--fg-70)] transition duration-200 hover:-translate-y-0.5 hover:border-[var(--blue)] hover:bg-[var(--blue)]/10 hover:text-[var(--fg-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue)]"
     >
       <IconArrowUpRight />
     </a>
@@ -181,7 +181,7 @@ function ProjectShowcaseCard({ project }: { project: Project }) {
   return (
     <article
       aria-labelledby={headingId}
-      className="group relative flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-7 transition duration-300 hover:-translate-y-1 hover:border-[#6da0ff]/35 hover:bg-white/[0.04] hover:shadow-[0_30px_80px_-24px_rgba(0,0,0,0.6)]"
+      className="group relative flex flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-7 transition duration-300 hover:-translate-y-1 hover:border-[var(--blue)] hover:bg-[var(--surface-2)] hover:shadow-[0_30px_80px_-24px_rgba(15,23,42,0.25)]"
     >
       <span
         aria-hidden="true"
@@ -191,18 +191,18 @@ function ProjectShowcaseCard({ project }: { project: Project }) {
       <div className="flex items-start justify-between">
         <span
           aria-hidden="true"
-          className="grid h-16 w-16 place-items-center rounded-full border border-white/10 bg-[radial-gradient(circle_at_50%_32%,rgba(109,160,255,0.2),rgba(255,255,255,0.02))] text-[#9dc0ff] shadow-[0_0_30px_-10px_rgba(109,160,255,0.55)]"
+          className="grid h-16 w-16 place-items-center rounded-full border border-[var(--border)] bg-[var(--icon-box)] text-[var(--icon-ink)] shadow-[0_0_30px_-10px_rgba(109,160,255,0.55)]"
         >
           {project.icon}
         </span>
         <ArrowButton href={primaryHref} label={`Open ${project.name}`} />
       </div>
 
-      <h3 id={headingId} className="mt-6 text-[1.6rem] font-semibold leading-tight text-white">
+      <h3 id={headingId} className="mt-6 text-[1.6rem] font-semibold leading-tight text-[var(--fg-strong)]">
         {project.name}
       </h3>
-      <p className="mt-1.5 text-[0.95rem] font-medium text-[#6da0ff]">{project.category}</p>
-      <p className="mt-4 text-[0.92rem] leading-relaxed text-white/60">{project.description}</p>
+      <p className="mt-1.5 text-[0.95rem] font-medium text-[var(--blue)]">{project.category}</p>
+      <p className="mt-4 text-[0.92rem] leading-relaxed text-[var(--fg-60)]">{project.description}</p>
 
       <div className="mt-auto pt-7">
         <ul className="flex flex-wrap gap-2">
@@ -228,15 +228,15 @@ export default function ProjectsSection() {
     <section id="projects" className="portfolio-section" aria-labelledby="projects-heading">
       <div className="page-shell">
         <header className="mb-14 max-w-[680px]">
-          <p className="m-0 font-[family-name:var(--font-geist-mono),monospace] text-[0.92rem] uppercase tracking-[0.3em] text-[#a8c4ff]">
+          <p className="m-0 font-[family-name:var(--font-geist-mono),monospace] text-[0.92rem] uppercase tracking-[0.3em] text-[var(--blue-soft)]">
             Projects
           </p>
-          <h2 id="projects-heading" className="mt-6 text-[2.6rem] font-medium leading-[1.12] text-white sm:text-[3rem]">
+          <h2 id="projects-heading" className="mt-6 text-[2.6rem] font-medium leading-[1.12] text-[var(--fg-strong)] sm:text-[3rem]">
             Real problems.
             <br />
-            Thoughtful systems<span className="text-[#a8c4ff]">.</span>
+            Thoughtful systems<span className="text-[var(--blue-soft)]">.</span>
           </h2>
-          <p className="mt-6 text-[1.02rem] leading-[1.75] text-white/70">
+          <p className="mt-6 text-[1.02rem] leading-[1.75] text-[var(--fg-70)]">
             A selection of projects where engineering meets impact.
             <br className="hidden sm:block" /> Each project is built with clarity, scalability, and purpose.
           </p>
