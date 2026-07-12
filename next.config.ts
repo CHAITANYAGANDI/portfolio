@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Pin the workspace root so Next doesn't pick up an unrelated lockfile
+  // higher up the directory tree.
+  turbopack: {
+    root: import.meta.dirname,
+  },
 };
 
 export default nextConfig;

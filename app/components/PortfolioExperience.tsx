@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import ProjectsSection from "./ProjectsSection";
 import ArchitectureDiagram from "./Architecture";
@@ -35,7 +35,7 @@ const education = [
   },
 ];
 
-const sectionVariants = {
+const sectionVariants: Variants = {
   hidden: { opacity: 0, y: 44, filter: "blur(10px)" },
   visible: {
     opacity: 1,
